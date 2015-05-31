@@ -1,0 +1,7 @@
+*.exe
+*.ilk
+*.pdb
+*.opensdf
+*.sdf
+*.suo
+/Flocking/Debug
