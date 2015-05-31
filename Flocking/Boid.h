@@ -14,7 +14,7 @@ public:
 
 	Vec2 getVelocity() { return velocity; }
 
-	void setVelocity(Vec2 velocity) { this->velocity = velocity; }
+	void setVelocity(Vec2 newVelocity);
 
 	Vec2 getPos() { return pos; }
 
@@ -22,6 +22,8 @@ public:
 
 	unsigned int getID() { return id; }
 private:
+
+	const float maxSpeed;
 
 	Vec2 pos;
 
