@@ -8,7 +8,7 @@
 class FlockingSystem
 {
 public:
-	FlockingSystem(Texture* texture);
+	FlockingSystem(Texture* texture, Vec2 boundries);
 
 	~FlockingSystem();
 
@@ -28,7 +28,11 @@ private:
 
 	Vec2 alignment(Boid* boid);
 
+	Vec2 keepInBounds(Boid* boid);
+
 	std::vector<Boid*> boids;
 
 	Texture* texture;
+
+	Vec2 boundries;
 };

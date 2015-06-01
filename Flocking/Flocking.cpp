@@ -1,9 +1,9 @@
 #include "Flocking.h"
 #include "Utility.h"
 
-FlockingSystem::FlockingSystem(Texture* texture)
+FlockingSystem::FlockingSystem(Texture* texture, Vec2 boundries)
+	: texture(texture), boundries(boundries)
 {
-	this->texture = texture;
 	initBoids();
 }
 
@@ -56,9 +56,9 @@ void FlockingSystem::applyRules(float dt)
 		Vec2 v1 = cohesion(boid);
 		Vec2 v2 = seperation(boid);
 		Vec2 v3 = alignment(boid);
-		//Vec2 v3 = 0;
+		Vec2 v4 = keepInBounds(boid);
 
-		boid->setVelocity(boid->getVelocity() + v1 + v2 + v3);
+		boid->setVelocity(boid->getVelocity() + v1 + v2 + v3 + v4);
 		
 		boid->update(dt);
 	}
@@ -97,6 +97,8 @@ Vec2 FlockingSystem::seperation(Boid* boid)
 				result -= (curBoid->getPos() - boid->getPos());
 			}
 			*/
+
+			//Ref: below code is from Jamie Slowgrove (TODO: Try above version again to see if it now works)
 			/*if the Boid is closer than 10 pixels to another Boid on the x axis (using absolute values)*/
 			if (std::abs(boid->getPos().x - curBoid->getPos().x) < 10)
 			{
@@ -131,4 +133,32 @@ Vec2 FlockingSystem::alignment(Boid* boid)
 	result = (result - boid->getVelocity()) / 8;
 	return result;
 	//return (result - boid->getVelocity()) / 8;
+}
+
+Vec2 FlockingSystem::keepInBounds(Boid* boid)
+{
+	Vec2 result = 0;
+
+	float speedAdjustment = 20.0f;
+	Vec2 boidPos = boid->getPos();
+
+	if (boidPos.x < 0.0f)
+	{
+		result.x = speedAdjustment;
+	}
+	else if (boidPos.x > boundries.x)
+	{
+		result.x = -speedAdjustment;
+	}
+
+	if (boidPos.y < 0.0f)
+	{
+		result.y = speedAdjustment;
+	}
+	else if (boidPos.y > boundries.y)
+	{
+		result.y = -speedAdjustment;
+	}
+
+	return result;
 }

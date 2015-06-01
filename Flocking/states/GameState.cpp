@@ -7,7 +7,7 @@ GameState::GameState(StateManager* manager, Platform* platform)
 
 	Texture* texture = new Texture("boid.png", platform, false, Vec2(4,4));
 
-	flocking = new FlockingSystem(texture);
+	flocking = new FlockingSystem(texture, platform->getWindowSize());
 }
 
 GameState::~GameState()
